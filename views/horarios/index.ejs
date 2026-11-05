@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Horários</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="../img/logo.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/estilo.css">
+</head>
+
+<body>
+
+    <%- include('../partials/nav') %>
+    <main class="container my-4 flex-grow-1">
+        <% if (horariocadastroEditar) { %>
+
+        <h2 class="fw-bold">Editar Lembrete</h2>
+        <form action="/horarios/editar/<%= horariocadastroEditar.id %>" method="POST">
+            <div class="mb-3">
+                <label class="form-label">Nome do lembrete</label>
+                <input type="text" name="nomelembrete" class="form-control" value="<%= horariocadastroEditar.nomelembrete || '' %>" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Nome do ponto</label>
+                <input type="text" name="nomeponto" class="form-control" value="<%= horariocadastroEditar.nomeponto || '' %>" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Horário</label>
+                <input type="time" name="horario" class="form-control" value="<%= horariocadastroEditar.horario || '' %>" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Linha de ônibus</label>
+                <select name="linha" class="form-select" required>
+                    <option value="">Selecione uma linha</option>
+                    <% linhas.forEach(linha => { %>
+                        <option value="<%= linha.id %>"
+                            <%= horariocadastroEditar.linha === linha.id ? "selected" : "" %>>
+                            <%= linha.numero %> - <%= linha.nome %>
+                        </option>
+                    <% }) %>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Sentido</label>
+                <select name="sentido" class="form-select" required>
+                    <option value="Ida" <%= horariocadastroEditar.sentido === "Ida" ? "selected" : "" %>>Ida</option>
+                    <option value="Volta" <%= horariocadastroEditar.sentido === "Volta" ? "selected" : "" %>>Volta</option>
+                    <option value="Não se aplica" <%= horariocadastroEditar.sentido === "Não se aplica" ? "selected" : "" %>>Não se aplica</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Dias da semana</label>
+
+                <% const dias = ["Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado", "Domingo"]; %>
+
+                <% const diasSelecionados = Array.isArray(horariocadastroEditar.diasemana)
+                    ? horariocadastroEditar.diasemana
+                    : [horariocadastroEditar.diasemana].filter(Boolean); %>
+
+                <% dias.forEach((dia, i) => { %>
+                    <div class="form-check">
+                        <input type="checkbox" name="diasemana" value="<%= dia %>" id="dia<%= i %>" class="form-check-input"<%= diasSelecionados.includes(dia) ? "checked" : "" %>>
+                        <label for="dia<%= i %>" class="form-check-label"><%= dia %></label>
+                    </div>
+                <% }) %>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Observações</label>
+                <textarea name="observacoes" class="form-control" rows="3"><%= horariocadastroEditar.observacoes || '' %></textarea>
+            </div>
+
+            <div class="d-flex gap-2">
+                <a href="/horarios" class="btn btn-outline-secondary w-50">Cancelar</a>
+                <button type="submit" class="btn cssbotao w-50">Salvar alterações</button>
+            </div>
+
+        </form>
+
+            <% } else { %>
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+            <div>
+                <h2 class="fw-bold">Meus horários</h2>
+                <p class="text-muted mb-0">Organize seus lembretes e acompanhe seus horários de ônibus.</p></div>
+            <a href="/horariocadastros" class="btn cssbotao"><i class="bi bi-plus-circle"></i>Novo lembrete</a>
+        </div>
+
+        <% if (horarios.length === 0) { %>
+            <div class="card border-0 shadow-sm rounded-4 text-center p-5">
+                <i class="bi bi-calendar-x fs-1 text-muted"></i>
+                <h5 class="mt-3">Nenhum lembrete cadastrado</h5>
+                <p class="text-muted">Você ainda não criou nenhum lembrete de horário.</p>
+                <a href="/horariocadastros" class="btn cssbotao mx-auto">Criar meu primeiro lembrete</a>
+            </div>
+
+        <% } else { %>
+
+            <div class="row g-3">
+                <% horarios.forEach(horario => { %>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card border-0 shadow-sm rounded-4 h-100">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <h5 class="fw-bold mb-0"><%= horario.nomelembrete %></h5>
+
+                                    <span class="badge text-bg-warning"><i class="bi bi-bell"></i>Lembrete</span>
+                                </div>
+
+                                <h3 class="fw-bold mb-3"><i class="bi bi-clock me-2"></i> <%= horario.horario %></h3>
+
+                                <p class="mb-2"><i class="bi bi-bus-front me-2"></i><strong>Linha:</strong> <%= horario.nomeLinha || horario.linha %></p>
+
+                                <p class="mb-2"><i class="bi bi-geo-alt me-2"></i><strong>Ponto:</strong> <%= horario.nomeponto %></p>
+
+                                <p class="mb-2"><i class="bi bi-arrow-left-right me-2"></i><strong>Sentido:</strong> <%= horario.sentido %></p>
+
+                                <p class="mb-2">
+                                    <i class="bi bi-calendar-week me-2"></i>
+                                    <strong>Dias:</strong>
+                                    <%= Array.isArray(horario.diasemana)
+                                        ? horario.diasemana.join(", ")
+                                        : horario.diasemana || "Não informado" %>
+                                </p>
+                                <% if (horario.observacoes) { %>
+                                    <p class="mb-3"><i class="bi bi-chat-left-text me-2"></i><strong>Observações:</strong> <%= horario.observacoes %></p>
+                                <% } %>
+                                <hr>
+                                <div class="d-flex gap-2">
+                                    <a href="/horarios/editar/<%= horario.id %>" class="btn btn-outline-primary w-50"><i class="bi bi-pencil-square me-1"></i>Editar</a>
+
+                                    <form action="/horarios/excluir/<%= horario.id %>" method="POST" class="w-50" onsubmit="return confirm('Deseja realmente excluir este lembrete?')">
+                                        <button type="submit" class="btn btn-outline-danger w-100"><i class="bi bi-trash me-1"></i>Excluir</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } %>
+    <% } %>
+    </main>
+
+    <%- include('../partials/footer') %>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

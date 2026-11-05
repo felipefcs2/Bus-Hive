@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recuperar senha</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="../img/logo.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/estilo.css">
+</head>
+
+<body>
+    <%- include('../partials/navsimples') %>
+    <!-- LOGIN CENTRALIZADO -->
+    <div class="container flex-grow-1">
+        <div class="d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+            <div style="width: 400px;">
+                <div class="card-body card-body-type2">
+                    <img src="img/logo.png" alt="Logo" class="d-block mx-auto">
+                    <h2 class="mb-4 text-center">Recupere sua senha</h2>
+                    <p class="text-center">Insira o e-mail cadastrado e enviaremos um código para redefinição!</p>
+                    <form action="/emailrecuperacoes/salvar" method="POST">
+                        <div class="mb-3">
+                            <input type="email" name="email" class="form-control form-control-lg caixinha-campo mx-auto" style="width: 90%;" placeholder="E-mail" required>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-lg cssbotao">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('../partials/footer') %>
+</body>
+</html>

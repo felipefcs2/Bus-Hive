@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Vale Transporte</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="icon" type="image/png" href="../img/logo.png">
+  <link rel="stylesheet" href="/css/estilo.css">
+</head>
+
+<body class="flex-column min-vh-100">
+  <%- include('../partials/nav') %>
+    <div class="container mt-4 flex-grow-1">
+      <div class="container mb-4">
+        <div class="text-center mb-4">
+        <h4 class="mb-1">Recarga de Cartão</h4>
+        <p class="mb-1">Esqueça a dor de cabeça de recarregar o seu cartão na empresa física e faça diretamente pelo site!</p>
+      </div>
+      <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-body p-4">
+          <h4 class="mb-2">Cadastrar cartão</h4>
+          <p class="text-muted mb-4">Preencha os dados ao lado para cadastrar seu cartão.</p>
+          <div class="row align-items-center g-4">
+            <div class="col-md-6 text-center">
+              <img src="/img/cartaoreal.png" alt="Cartão Mov Itu" style="width: 70%;">
+            </div>
+
+            <div class="col-md-6">
+              <form action="/cartaocadastros/salvar" method="POST">
+                <div class="mb-3">
+                  <label class="form-label">Nome:</label>
+                  <input type="text" name="nome" class="form-control" placeholder="Nome no Cartão" required>
+                </div>
+                <div class="mb-4">
+                  <label class="form-label">Número do Cartão:</label>
+                  <input type="number" name="ncartao" class="form-control" placeholder="Número do Cartão" required>
+                </div>
+                <button type="submit" class="btn cssbotao w-100">Cadastrar cartão</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include('../partials/footer') %>
+</body>
+
+</html>

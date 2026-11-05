@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Horários</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../img/logo.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/estilo.css">
+</head>
+<body>
+    <%- include('../partials/nav') %>
+    <main class="container mb-4 flex-grow-1" style="margin-top: 20px;">
+        <div class="mb-4">
+            <h2 class="fw-bold">Criar lembrete</h2>
+            <p class="text-muted">Organize seus horários e não perca seu ônibus!</p>
+        </div>
+
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body p-4">
+                <form action="/horariocadastros/salvar" method="POST">
+
+                    <div class="mb-3">
+                        <label for="nomelembrete" class="form-label">Nome do lembrete</label>
+                        <input type="text" name="nomelembrete" id="nomelembrete" class="form-control" placeholder="Ir para casa" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="linha" class="form-label">Linha de ônibus</label>
+                        <select name="linha" id="linha" class="form-select" required>
+                            <option value="">Selecione uma linha</option>
+                            <% linhas.forEach(linha => { %>
+                                <option value="<%= linha.id %>"><%= linha.numero %> - <%= linha.nome %></option>
+                            <% }) %>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="nomeponto" class="form-label">Nome do ponto</label>
+                        <input type="text" name="nomeponto" id="nomeponto" class="form-control" placeholder="Ponto da Unidade de Saúde" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="horario" class="form-label">Horário</label>
+                        <input type="time" name="horario" id="horario" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Sentido da linha</label>
+                        <div class="form-check">
+                            <input type="radio" name="sentido" id="ida" value="Ida" class="form-check-input" required>
+                            <label for="ida" class="form-check-label">Ida</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" name="sentido" id="volta" value="Volta" class="form-check-input">
+                            <label for="volta" class="form-check-label">Volta</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" name="sentido" id="naotem" value="Não tem" class="form-check-input">
+                            <label for="naotem" class="form-check-label">Não tem</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Dias da semana</label>
+                        <% const dias = [ "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado", "Domingo"]; %>
+                        <div class="row">
+                            <% dias.forEach((dia, i) => { %>
+                                <div class="col-6 col-md-4 mb-2">
+                                    <div class="form-check">
+                                        <input type="checkbox" name="diasemana" value="<%= dia %>" id="dia<%= i %>" class="form-check-input">
+                                        <label for="dia<%= i %>" class="form-check-label"> <%= dia %> </label>
+                                    </div>
+                                </div>
+                            <% }) %>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="observacoes" class="form-label">Observações</label>
+
+                        <textarea name="observacoes" id="observacoes" class="form-control" rows="3" placeholder="Alguma informação importante? (Opcional)"></textarea>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <a href="/horarios" class="btn btn-outline-secondary w-50">Cancelar</a>
+                        <button type="submit" class="btn cssbotao w-50"><i class="bi bi-bell me-2"></i> Salvar lembrete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <%- include('../partials/footer') %>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

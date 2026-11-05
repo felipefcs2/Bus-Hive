@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-lg css-nav shadow-sm">
+    <div class="container-fluid">
+
+        <a class="navbar-brand" href="/">
+            <img src="/img/logo.png" alt="Logo" style="height: 60px; width: auto;">
+        </a>
+
+        <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse" data-bs-target="#menu"
+            aria-controls="menu" aria-expanded="false"
+            aria-label="Toggle navigation">
+
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="menu">
+
+            <ul class="navbar-nav me-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link <%= reqPath.startsWith('/mapas') ? 'active' : '' %>"
+                    href="/mapas">Mapas</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link <%= reqPath.startsWith('/horarios') || reqPath.startsWith('/horariocadastros') ? 'active' : '' %>"
+                    href="/horarios">Horários</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link <%= reqPath.startsWith('/cartaocadastros') || reqPath.startsWith('/cartaoinfos') ? 'active' : '' %>"
+                    href="/cartaocadastros">Vale Transporte</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link <%= reqPath.startsWith('/integrantes') ? 'active' : '' %>"
+                    href="/integrantes">Integrantes</a>
+                </li>
+
+            </ul>
+
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link <%= reqPath.startsWith('/logins') ? 'active' : '' %>"
+                    href="/logins">Entrar</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>

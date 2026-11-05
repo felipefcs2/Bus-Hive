@@ -1,0 +1,131 @@
+html, body{
+    min-height: 100%;
+}
+
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #EDEDED;
+}
+
+.css-nav {
+    background-color: #FFFB8E;
+    height: 85px;
+    padding: 0;
+}
+
+.css-nav .container-fluid {
+    height: 100%;
+}
+
+.css-nav .navbar-collapse {
+    height: 100%;
+}
+
+.css-nav .navbar-nav {
+    height: 100%;
+}
+
+.css-nav .nav-item {
+    height: 100%;
+}
+
+.css-nav .nav-link {
+    color: black;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.css-nav .nav-link.active {
+    background-color: #f3ef87;
+    border-bottom: 4px solid #F8CB51;
+    border-radius: 0;
+}
+
+@media (max-width: 991.98px) {
+    .css-nav {
+        height: auto;
+    }
+
+    .css-nav .navbar-collapse,
+    .css-nav .navbar-nav,
+    .css-nav .nav-item {
+        height: auto;
+    }
+
+    .css-nav .nav-link {
+        padding: 12px 20px;
+    }
+}
+
+/*Banner cortando certo*/
+#carouselExampleAutoplaying .carousel-item img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    object-position: center;
+}
+
+@media (max-width: 575.98px) {
+    #carouselExampleAutoplaying .carousel-item img {
+        height: 200px;
+    }
+}
+
+/*card do home*/
+
+.card-home{
+    border-radius: 20px;
+}
+
+.card-body-type{
+    background-color: #EEECC1;
+    border-radius: 20px;
+}
+
+/*card do login*/
+.card-body-type2{
+    background-color: #EDEDED;
+}
+
+.caixinha-campo{
+    background-color: #D9D9D9;
+    border-radius: 20px;
+}
+
+.cssbotao{
+    background-color: #F8CB51; 
+    color: black; 
+    border-radius: 15px;
+}
+
+/*divisor do home*/
+.linha{
+    border-top: 1.5px solid #000;
+    margin: 50px 0;
+    width: 90%;
+}
+
+/*Caixinha bonita no codigo*/
+.codigo-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+/*Caixinha bonita no codigo*/
+.codigo-input {
+    width: 50px;
+    height: 60px;
+    text-align: center;
+    font-size: 24px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+}
+
+.css-footer{
+    background-color: #FFFB8E;
+}

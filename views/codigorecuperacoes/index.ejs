@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recuperar senha</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="../img/logo.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/estilo.css">
+</head>
+
+<body>
+    <%- include('../partials/navsimples') %>
+    <div class="container flex-grow-1">
+        <div class="d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+            <div style="width: 400px;">
+                <div class="card-body card-body-type2">
+                    <img src="img/logo.png" alt="Logo" class="d-block mx-auto">
+                    <h2 class="mb-4 text-center">Recupere sua senha</h2>
+                    <p class="text-center">Se houver e-mail cadastrado enviaremos um código. Insira-o para prosseguimos com sua recuperação!</p>
+                    <form action="/codigorecuperacoes/salvar" method="POST">
+                        <div class="codigo-container">
+                            <input type="number" maxlength="1" class="codigo-input">
+                            <input type="number" maxlength="1" class="codigo-input">
+                            <input type="number" maxlength="1" class="codigo-input">
+                            <input type="number" maxlength="1" class="codigo-input">
+                            <input type="number" maxlength="1" class="codigo-input">
+                            <input type="number" maxlength="1" class="codigo-input">
+                        </div>
+
+                        <input type="hidden" name="codigo" id="codigo">
+
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-lg cssbotao" style="width: 350px;">Verificar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion" id="accordionEmail" style="margin-top: 30px;">
+        <div class="accordion-item">
+
+        <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEmail" aria-expanded="true" aria-controls="collapseEmail">Tabela somente para provar a funcionalidade de cadastro (não terá na versão final)</button>
+        </h2>
+
+            <div id="collapseEmail" class="accordion-collapse collapse show" data-bs-parent="#accordionEmail">
+            <div class="accordion-body">
+
+                <!-- 🖥️ DESKTOP -->
+                <div class="d-none d-md-block">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>E-mail</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% emailrecuperacoes.forEach(cat => { %>
+                                <tr>
+                                    <td><%= cat.id %></td>
+                                    <td><%= cat.email %></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 📱 MOBILE -->
+                <div class="d-md-none">
+                    <% emailrecuperacoes.forEach(cat => { %>
+                        <div class="card mb-3 shadow-sm">
+                            <div class="card-body">
+
+                                <h5 class="card-title"><%= cat.id %></h5>
+                                <p class="card-text text-muted">
+                                    Email: <%= cat.email %>
+                                </p>
+                                
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+
+        <div class="accordion" id="accordionCodigo" style="margin-top: 30px;">
+        <div class="accordion-item">
+
+        <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCodigo" aria-expanded="true" aria-controls="collapseCodigo">Tabela somente para provar a funcionalidade de cadastro (não terá na versão final)</button>
+        </h2>
+
+            <div id="collapseCodigo" class="accordion-collapse collapse show" data-bs-parent="#accordionCodigo">
+            <div class="accordion-body">
+
+                <!-- 🖥️ DESKTOP -->
+                <div class="d-none d-md-block">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Código</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% codigorecuperacoes.forEach(cat => { %>
+                                <tr>
+                                    <td><%= cat.id %></td>
+                                    <td><%= cat.codigo %></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 📱 MOBILE -->
+                <div class="d-md-none">
+                    <% codigorecuperacoes.forEach(cat => { %>
+                        <div class="card mb-3 shadow-sm">
+                            <div class="card-body">
+
+                                <h5 class="card-title"><%= cat.id %></h5>
+                                <p class="card-text text-muted">
+                                    Codigo: <%= cat.codigo %>
+                                </p>
+                                
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <%- include('../partials/footer') %>
+
+    <!--Funcionamento dos quadradinhos da senha-->
+    <script>
+    const inputs = document.querySelectorAll('.codigo-input');
+    const codigo = document.getElementById('codigo');
+
+    inputs.forEach((input, index) => {
+
+        input.maxLength = 1;
+
+        input.addEventListener('input', () => {
+
+            input.value = input.value.replace(/\D/g, '').slice(0, 1);
+
+            codigo.value = Array.from(inputs)
+                .map(input => input.value)
+                .join('');
+
+            if (input.value && index < inputs.length - 1) {
+                inputs[index + 1].focus();
+            }
+        });
+
+        input.addEventListener('keydown', (event) => {
+            if (
+                event.key === 'Backspace' &&
+                !input.value &&
+                index > 0
+            ) {
+                inputs[index - 1].focus();
+            }
+        });
+    });
+</script>
+</body>
+</html>
