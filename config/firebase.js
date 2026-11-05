@@ -2,7 +2,9 @@
 const { initializeApp, cert, getApps } = require("firebase-admin/app");
 const { getDatabase } = require("firebase-admin/database");
 
-const serviceAccount = require("./serviceAccountKey.json");
+const serviceAccount = JSON.parse( 
+    process.env.FIREBASE_SERVICE_ACCOUNT 
+); 
 
 const app = getApps().length
     ? getApps()[0]
